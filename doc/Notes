@@ -1,0 +1,94 @@
+
+##################################################################
+###                                                            ### 
+###                   Part 1 - Load the Data                   ###
+###                                                            ### 
+##################################################################
+
+  
+(1) Read earnings data from for "Russell_3000_Earnings_Announcements.csv"
+  
+    -> StockList (Stock P1)
+    -> Miss, Meet, Beat
+    
+    
+    
+(2) Use libcurl to retrieve the historical data (adjusted close price) from "eodhistoricaldata.com" 
+    for all Russell 3000 stocks and IWV ( Stock P2 ) 
+    
+    -> StockList (Stock P2)
+    -> IWV
+    
+##################################################################
+###                                                            ### 
+###                   Part 2 - Bootstrap                       ###
+###                                                            ### 
+##################################################################
+
+(1) Randomly selecting 80 stocks from each group, total 240 stocks
+
+
+(2) Calculate daily return, benchmark return, abnormal return 
+
+       N = 60
+       -------------------------------------------------------------------------------------------------------------
+       | t               |  -60     -59     -58      ...     -1       0       1      ...      58       59       60 |
+       |-----------------------------------------------------------------------------------------------------------|
+       | r_stock         |           r1      r2             r59     r60     r61             r118     r119     r120 |
+       | R_benchmark     |           R1      R2             R59     R60     R61             R118     R119     R120 |
+       | abnormal_return |          AR1     AR2            AR59    AR60    AR61            AR118    AR119    AR120 |
+       -------------------------------------------------------------------------------------------------------------
+                                                   
+                                                         ----  
+                                                         |  |    
+                                                         |  |       
+                                                      ----  ----
+                                                       \      / 
+                                                        \    /
+                                                         \  /                                                       
+                                                          \/      
+       
+       80 stocks for each group :
+       ----------------------------------------------------------------------------------------------------
+       |    t   |  -60     -59     -58      ...     -1       0       1      ...      58       59       60 |
+       |---------------------------------------------------------------------------------------------------
+       |   AAR  |         AAR1    AAR2           AAR59   AAR60   AAR61           AAR118   AAR119   AAR120 |
+       |  CAAR  |        CAAR1   CAAR2          CAAR59  CAAR60  CAAR61          CAAR118  CAAR119  CAAR120 |
+       ----------------------------------------------------------------------------------------------------                                                
+
+
+(3) Repeat (1) ~ (3) 40 times to calculate average AAR, average CAAR, STD of AAR, STD of CAAR
+        
+        t = -59
+       -----------------------------------------------------------------
+       | Group | average AAR | average CAAR | STD of AAR | STD of CAAR |
+       |----------------------------------------------------------------
+       | Beat  |                                                       |
+       | Meet  |                                                       |  
+       | Miss  |                                                       | 
+       -----------------------------------------------------------------  
+   
+
+##################################################################
+###                                                            ### 
+###                   Part 3 - Design the Menu                 ###
+###                                                            ### 
+##################################################################
+
+(1) Enter N to retrieve 2N+1 days of historical price data for all stocks 
+    (you need to validate user input to make sure N >= 60) 
+        
+(2) Pull information for one stock from one group:
+      ▪ Daily Prices   ▪ Cumulative Daily Return   ▪ The group the stock belongs to
+      ▪ Earning Announcement Date, Period Ending, Estimated, Reported Earnings, Surprise and Surprise %
+        
+(3) Show AAR, AAR-STD, CAAR and CAAR-STD for one group
+    
+(4) Show the gnuplot graph with CAAR for all 3 groups
+     
+(5) Exit your program
+
+
+
+
+
