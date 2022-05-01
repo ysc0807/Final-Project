@@ -1,40 +1,32 @@
 
-# FRE 6883 Final Project    
+### Please change FILEPATH and API_TOKEN in the LoadData.hpp to run
 
-* The stocks and their corresponding price information for each group should be stored in a STL map, with stock symbol as its keys
+### The program do the following things 
 
-* The expected AAR, AAR STD, and expected CAAR and CAAR STD for 3 groups are presented in a matrix. The row of the matrix is the group#, matrix columns are for AAR, AAR-STD, CAAR, CAAR-STD
+(1) Load the earning data ( < 0.1s )
 
-* Use gnuplot to show the CAAR from all 3 groups in one graph
+(2) Split all the stocks into 3 groups  ( < 0.1s )
 
-- Your program should be able to:
-  - **Retrieve historical price data for all selected stocks. Parse the retrieved data for dates and adjusted closing prices**
-  - **Calculate AAR, AAR-STD, CAAR, CAAR-STD for each group**
-  - **Populate the stock maps and AAR/CAAR matrix**
-  - **Show the gnuplot graph with CAAR for all 3 groups**
+(3) Use multi-thread to download price data for all stocks upfront ( ~ 100s )
 
-- Your program should have a menu of 5 options:
-  - **Enter N to retrieve 2N+1 days of historical price data for all stocks (you need to validate user input to make sure N >= 60)**
-  - **Pull information for one stock from one group:**
-    
-   &emsp;&emsp;&emsp;  *(1) Daily Prices* 
-    
-   &emsp;&emsp;&emsp;  *(2) Cumulative Daily Returns* 
-    
-   &emsp;&emsp;&emsp;  *(3) The group the stock belongs to* 
-    
-   &emsp;&emsp;&emsp;  *(4) Earning Announcement Date* 
-    
-   &emsp;&emsp;&emsp;  *(5) Period Ending* 
-    
-   &emsp;&emsp;&emsp;  *(6) Estimated* 
-    
-   &emsp;&emsp;&emsp;  *(7) Reported Earnings* 
-    
-   &emsp;&emsp;&emsp;  *(8) Surprise* 
-    
-   &emsp;&emsp;&emsp;  *(9) Surprise %*
-    
-  - **Show AAR, AAR-STD, CAAR and CAAR-STD for one group**
-  - **Show the gnuplot graph with CAAR for all 3 groups**
-  - **Exit your program**
+     * 12/31/2021 prices are missing for some stocks and forward fill is used
+     
+     * Some stocks are excluded from the pool so that they cannot be randomly selected in the bootstrapping step
+          a. Stocks with the earning announcement date on weekend 
+          b. Stocks with incomplete price series ( eg. AGL, its price data is only available from 2021-04-15 ) 
+     
+(4) Calculate the largest valid N ( < 0.1s )
+
+(5) Bootstrap each time a new N is entered ( 6 ~ 10s )
+
+
+### Details of Bootstrapping
+
+(1) Randomly select 80 stocks for each group
+
+(2) Calculate the daily returns and cumulative returns for each stock, O(2 * 2N)  * O(1) for stocks that have been selected before
+
+(3) Compute Avg.AAR, AAR-STD, Avg.CAAR, CAAR STD
+
+    Total time Complexity is ~ O(40 x 3 x 80 x 2N x (2/3 + 2))
+
