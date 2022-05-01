@@ -29,9 +29,11 @@
 
 (1) Randomly select 80 stocks for each group
 
-(2) Calculate the daily returns and cumulative returns for each stock, O(2 * 2N)  * O(1) for stocks that have been selected before
+(2) Calculate the daily returns and cumulative returns for each stock, O(2 * 2N)   * O(1) for stocks that have been selected before
 
-(3) Compute Avg.AAR, AAR-STD, Avg.CAAR, CAAR STD
+(3) Compute AAR, CAAR for each t and group
+
+(4) Repeat (1) ~ (3) for 40 times to compute Avg.AAR, AAR-STD, Avg.CAAR, CAAR STD
 
     Total time Complexity is ~ O(40 x 3 x 80 x 2N x (2/3 + 2))
 
