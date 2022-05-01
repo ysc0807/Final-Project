@@ -9,7 +9,7 @@
 
 (2) Split all the stocks into 3 groups  ( < 0.1s )
 
-(3) Use multi-thread to download price data for all stocks upfront ( ~ 100s )
+(3) Use libcurl to download price data for all stocks upfront ( 3 threads, ~ 100s )
 
      * 12/31/2021 prices are missing for some stocks and forward fill is used
      
