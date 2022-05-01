@@ -14,6 +14,7 @@
      * 12/31/2021 prices are missing for some stocks and forward fill is used
      
      * Some stocks are excluded from the pool so that they cannot be randomly selected in the bootstrapping step
+         
           a. Stocks with the earning announcement date on weekend 
           b. Stocks with incomplete price series ( eg. AGL, its price data is only available from 2021-04-15 ) 
      
